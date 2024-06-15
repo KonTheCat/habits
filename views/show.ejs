@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>habits</title>
+</head>
+<body>
+    <h1><%=habit.name%></h1>
+    <p>
+        <a href="/habits/<%= habit._id%>/edit">Edit</a>
+        - 
+        <form action="/habits/<%= habit._id%>?_method=DELETE" method="POST">
+            <input type="submit" value="DELETE">
+        </form>
+    </p>
+    <p>Description: <%= habit.description%></p>
+    <p>Category: <%= habit.category%></p>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Notes</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <% for (let i = 0; i < habit.completions.length; i++) { %>
+            <tr>
+                <th><%= habit.completions[i].date%></th>
+                <th><%= habit.completions[i].notes%></th>
+                <th><a href="/habits/<%= habit._id%>/<%= habit.completions[i]._id%>/edit">Edit</a></th>
+                <th>
+                    <form action="/habits/<%= habit._id%>/<%= habit.completions[i]._id%>?_method=DELETE" method="POST">
+                        <input type="submit" value="Delete">
+                    </form>
+                </th>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>
