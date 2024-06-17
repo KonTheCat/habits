@@ -4,7 +4,7 @@ const habitsController = require('./controllers/habits.js')
 const mongoose = require('mongoose')
 const app = express()
 const port = process.env.port || 4006
-const mongoURI = "mongodb://127.0.0.1:27017/habits"
+const mongoURI = process.env.mongoURI || "mongodb://127.0.0.1:27017/habits"
 
 //Middleware
 app.use(express.urlencoded({extended:true}))
