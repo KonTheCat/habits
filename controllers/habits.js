@@ -1,10 +1,14 @@
 const express = require("express")
 const router = express.Router()
 const Habits = require('../models/habit.js')
+const Users = require('../models/user.js')
+const jwt = require('jsonwebtoken')
+const accessToken = process.env.SECRET_ACCESS_TOKEN
 
 //INDUCES
 //INDEX
 router.get('/', async (req, res) => {
+    const userID = getCurrentUser(req.headers["cookie"])
     const habits = await Habits.find({})
     res.render('index.ejs', {
         habits: habits
@@ -121,6 +125,28 @@ function getCompletionForGivenHabitAndCompletionID(habit, completionID) {
         if (habit.completions[i]._id.toString() === completionID) {
             return habit.completions[i]
         }
+    }
+}
+
+function getCurrentUser () {
+    const header = req.headers["cookie"]
+    if (header) {
+        console.log(`we have a cookie`)
+        console.log(header)
+        const cookie = header.split('=')[1]
+        jwt.verify(cookie, accessToken, async(err, decoded) => {
+            if (err) {
+                console.log(`session expired?`)
+                return false
+            }
+            const {id} = decoded
+            const user = await Users.findById(id)
+            console.log(user)
+            return user
+        })
+    } else {
+        console.log(`we do not have a cookie`)
+        return false
     }
 }
 

@@ -1,6 +1,8 @@
 //substantially inspired by https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const accessToken = process.env.SECRET_ACCESS_TOKEN
 
 const userSchema = new mongoose.Schema(
     {
@@ -54,6 +56,15 @@ userSchema.pre("save", function(next) {
         })
     })
 })
+
+userSchema.methods.generateAccessJWT = function () {
+    let payload = {
+        id: this._id,
+    }
+    return jwt.sign(payload, accessToken, {
+        expiresIn: '20m'
+    })
+}
 
 const User = mongoose.model('User', userSchema)
 module.exports = User
