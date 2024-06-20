@@ -1,7 +1,9 @@
+const Users = require('../models/user.js')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const habitSchema = new Schema({
+    userID: String, 
     name: String,
     description: String,
     category: String, 

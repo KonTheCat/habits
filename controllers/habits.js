@@ -8,10 +8,18 @@ const accessToken = process.env.SECRET_ACCESS_TOKEN
 //INDUCES
 //INDEX
 router.get('/', async (req, res) => {
-    const userID = getCurrentUser(req.headers["cookie"])
+    let user = getCurrentUser(req.headers["cookie"])
+    if (user) {
+        console.log(`we have a user for the app to use`)
+    } else {
+        console.log(user)
+        console.log(`we do not have a user for the app to use`)
+        user = false
+    }
     const habits = await Habits.find({})
     res.render('index.ejs', {
-        habits: habits
+        habits: habits,
+        user: user
     })
 })
 
@@ -128,8 +136,7 @@ function getCompletionForGivenHabitAndCompletionID(habit, completionID) {
     }
 }
 
-function getCurrentUser () {
-    const header = req.headers["cookie"]
+async function getCurrentUser (header) {
     if (header) {
         console.log(`we have a cookie`)
         console.log(header)
@@ -142,6 +149,7 @@ function getCurrentUser () {
             const {id} = decoded
             const user = await Users.findById(id)
             console.log(user)
+            console.log('we are here')
             return user
         })
     } else {
