@@ -5,21 +5,45 @@ const Users = require('../models/user.js')
 const jwt = require('jsonwebtoken')
 const accessToken = process.env.SECRET_ACCESS_TOKEN
 
+//Middleware
+const getCurrentUserInfo = async function (req, res, next) {
+    const header = req.headers["cookie"]
+    if (header) {
+        console.log(`we have a cookie`)
+        console.log(header)
+        const cookie = header.split('=')[1]
+        jwt.verify(cookie, accessToken, async(err, decoded) => {
+            if (err) {
+                console.log(`session expired?`)
+                return false
+            }
+            const {id} = decoded
+            const user = await Users.findById(id)
+            Promise.resolve(user)
+            console.log(user)
+            console.log('we are here')
+            req.userData = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            }
+        })
+    } else {
+        console.log(`we do not have a cookie`)
+        req.userData = false
+    }
+    next()
+}
+
+router.use(getCurrentUserInfo)
+
 //INDUCES
 //INDEX
 router.get('/', async (req, res) => {
-    let user = getCurrentUser(req.headers["cookie"])
-    if (user) {
-        console.log(`we have a user for the app to use`)
-    } else {
-        console.log(user)
-        console.log(`we do not have a user for the app to use`)
-        user = false
-    }
     const habits = await Habits.find({})
     res.render('index.ejs', {
         habits: habits,
-        user: user
+        user: req.userData
     })
 })
 
@@ -133,28 +157,6 @@ function getCompletionForGivenHabitAndCompletionID(habit, completionID) {
         if (habit.completions[i]._id.toString() === completionID) {
             return habit.completions[i]
         }
-    }
-}
-
-async function getCurrentUser (header) {
-    if (header) {
-        console.log(`we have a cookie`)
-        console.log(header)
-        const cookie = header.split('=')[1]
-        jwt.verify(cookie, accessToken, async(err, decoded) => {
-            if (err) {
-                console.log(`session expired?`)
-                return false
-            }
-            const {id} = decoded
-            const user = await Users.findById(id)
-            console.log(user)
-            console.log('we are here')
-            return user
-        })
-    } else {
-        console.log(`we do not have a cookie`)
-        return false
     }
 }
 

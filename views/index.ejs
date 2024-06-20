@@ -9,9 +9,9 @@
     <h1>habits</h1>
     <a href="/login">Login</a>
     <a href="/login/register">Register</a>
-    <% if (user) { %>
+    <% if (user.firstName) { %>
         <br>
-        <p>Hello <%= user %></p>
+        <p>Hello <%= user.firstName %></p>
         <a href="/habits/new">Add a new habit</a>
         <ul>
             <%for (let i = 0; i < habits.length; i++) {%>
