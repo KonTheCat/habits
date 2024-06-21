@@ -1,15 +1,18 @@
+require('dotenv').config()
 const express = require('express')
 const methodOverride = require('method-override')
 const habitsController = require('./controllers/habits.js')
+const usersController = require('./controllers/users.js')
 const mongoose = require('mongoose')
 const app = express()
-const port = process.env.port || 4006
-const mongoURI = process.env.mongoURI || "mongodb://127.0.0.1:27017/habits"
+const port = process.env.port
+const mongoURI = process.env.mongoURI
 
 //Middleware
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 app.use('/habits', habitsController)
+app.use('/login', usersController)
 
 async function connectToMongo() {
     try {
