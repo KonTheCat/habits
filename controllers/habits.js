@@ -18,8 +18,7 @@ const getCurrentUserInfo = async function (req, res, next) {
                 return false
             }
             const {id} = decoded
-            const user = await Users.findById(id)
-            Promise.resolve(user)
+            const user = await Users.findById(id).then(res =>{return res})
             console.log(user)
             console.log('we are here')
             req.userData = {
@@ -27,12 +26,14 @@ const getCurrentUserInfo = async function (req, res, next) {
                 lastName: user.lastName,
                 email: user.email
             }
+            next()
         })
     } else {
         console.log(`we do not have a cookie`)
         req.userData = false
+        next()
     }
-    next()
+    
 }
 
 router.use(getCurrentUserInfo)
@@ -40,7 +41,8 @@ router.use(getCurrentUserInfo)
 //INDUCES
 //INDEX
 router.get('/', async (req, res) => {
-    const habits = await Habits.find({})
+    const habits = await Habits.find({}).then(res =>{return res})
+    console.log(habits)
     res.render('index.ejs', {
         habits: habits,
         user: req.userData
