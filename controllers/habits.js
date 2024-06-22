@@ -42,7 +42,7 @@ router.use(getCurrentUserInfo)
 //INDUCES
 //INDEX
 router.get('/', async (req, res) => {
-    const habits = await Habits.find({}).then(res =>{return res})
+    const habits = await Habits.find({userID: req.userData.id}).then(res =>{return res})
     res.render('index.ejs', {
         habits: habits,
         user: req.userData
