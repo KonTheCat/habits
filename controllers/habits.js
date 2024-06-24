@@ -14,7 +14,14 @@ const getCurrentUserInfo = async function (req, res, next) {
         const cookie = header.split('=')[1]
         jwt.verify(cookie, accessToken, async(err, decoded) => {
             if (err) {
-                console.log(`session expired?`)
+                console.log(`session expired`)
+                const userData = {
+                    id: null,
+                    firstName: null,
+                    lastName: null,
+                    email: null
+                }
+                req.userData = userData
                 next()
             }
             const {id} = decoded
