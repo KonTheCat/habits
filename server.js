@@ -14,6 +14,9 @@ app.use(methodOverride('_method'))
 app.use('/habits', habitsController)
 app.use('/login', usersController)
 
+//Static
+app.use(express.static('public'))
+
 async function connectToMongo() {
     try {
         await mongoose.connect(mongoURI)
