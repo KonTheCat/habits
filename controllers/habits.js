@@ -19,13 +19,14 @@ const getCurrentUserInfo = async function (req, res, next) {
             }
             const {id} = decoded
             const user = await Users.findById(id).then(res =>{return res})
-            console.log(user)
-            console.log('we are here')
-            req.userData = {
+            const userData = {
+                id: user.id,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email
             }
+            console.log(userData)
+            req.userData = userData
             next()
         })
     } else {
@@ -41,8 +42,7 @@ router.use(getCurrentUserInfo)
 //INDUCES
 //INDEX
 router.get('/', async (req, res) => {
-    const habits = await Habits.find({}).then(res =>{return res})
-    console.log(habits)
+    const habits = await Habits.find({userID: req.userData.id}).then(res =>{return res})
     res.render('index.ejs', {
         habits: habits,
         user: req.userData
@@ -110,6 +110,7 @@ router.put('/:habitID/:completionID', async (req, res) => {
 //CREATE
 router.post('/new', async (req, res) => {
     try {
+        req.body.userID = req.userData.id
         await Habits.create(req.body)
         res.redirect('/')
     } catch (err) {

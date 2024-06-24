@@ -62,7 +62,7 @@ userSchema.methods.generateAccessJWT = function () {
         id: this._id,
     }
     return jwt.sign(payload, accessToken, {
-        expiresIn: '20m'
+        expiresIn: '180m'
     })
 }
 
