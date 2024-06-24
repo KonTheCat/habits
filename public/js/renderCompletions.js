@@ -1,13 +1,12 @@
 const numberOfDaysToLookBack = 14
 
 function processHabitsData() {
-    const jsonHabits = document.getElementById('habits').innerHTML
-    if (jsonHabits) {
-        // console.log('we have habits')
-        const habits = JSON.parse(jsonHabits)
+    const habits = JSON.parse(document.getElementById('habits').innerHTML)
+    console.log(habits.length)
+    if (habits.length > 0) {
+        console.log('we have habits')
         // console.log(habits)
         createCompletionsTable(numberOfDaysToLookBack, habits)
-
     } else {
         console.log('we have not the habits')
     }

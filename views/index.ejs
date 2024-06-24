@@ -21,11 +21,13 @@
     </nav>
     <% if (user.firstName) { %>
         <p>Hello <%= user.firstName %></p>
-    <p>Your habits at a glance:</p>
-        <% if (habits) {%>
+        <% if (habits.length > 0) {%>
+            <p>Your habits at a glance:</p>
             <p></p>
             <p id="habits" style="display: none;"><%=JSON.stringify(habits)%></p>
-        <% }%>
+        <% } else { %>
+            <img src="/img/dog_motivation.jpg" style="object-fit: contain; height: 100%; width: 100%;" alt="">
+        <% } %>
     <% } else { %>
         <img src="/img/motivation.webp" style="object-fit: contain; height: 100%; width: 100%;" alt="">
         <% } %>
