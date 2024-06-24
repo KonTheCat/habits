@@ -52,10 +52,15 @@ function createCompletionsTable(numberOfDaysToLookBack, habits) {
         const habitDidItURI = `/habits/${element._id}/new`
         habitDidItLink.setAttribute('href', habitDidItURI)
         habitDidItLink.innerHTML = 'Did it!'
-        const br = document.createElement("br")
+        const habitEditLink = document.createElement('a')
+        const habitEditURI = `/habits/${element._id}/edit`
+        habitEditLink.setAttribute('href', habitEditURI)
+        habitEditLink.innerHTML = 'Edit'
         habitName.appendChild(habitNameLink)
-        habitName.appendChild(br)
+        habitName.appendChild(document.createElement("br"))
         habitName.appendChild(habitDidItLink)
+        habitName.appendChild(document.createElement("br"))
+        habitName.appendChild(habitEditLink)
         habitRow.appendChild(habitName)
 
         for (let i = dateStart.getDate(); i <= dateToday.getDate(); i++) {
