@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>habits</title>
 </head>
 <body>
-    <h1>Edit <%=completion.date%> completion</h1>
+    <h1>Edit <%=completion.date.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})%> completion</h1>
+    <nav>
+        <ul class="nav nav-tabs">
+                <a class="nav-link" href="/habits/<%=habit._id%>"><li class="nav-item">Back to habit</li></a>
+                <a class="nav-link" href="/habits/"><li class="nav-item">Back to main</li></a>
+                
+        </ul>
+    </nav>
     <form action="/habits/<%=habit._id%>/<%=completion._id%>?_method=PUT" method="POST">
         Notes: <textarea name="notes"><%=completion.notes%></textarea> <br>
         <input type="submit" value="Update">
