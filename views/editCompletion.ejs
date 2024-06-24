@@ -7,11 +7,12 @@
     <title>habits</title>
 </head>
 <body>
-    <h1>Edit <%=completion.date%> completion</h1>
+    <h1>Edit <%=completion.date.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})%> completion</h1>
     <nav>
         <ul class="nav nav-tabs">
                 <a class="nav-link" href="/habits/<%=habit._id%>"><li class="nav-item">Back to habit</li></a>
                 <a class="nav-link" href="/habits/"><li class="nav-item">Back to main</li></a>
+                
         </ul>
     </nav>
     <form action="/habits/<%=habit._id%>/<%=completion._id%>?_method=PUT" method="POST">
