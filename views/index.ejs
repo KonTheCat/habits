@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>habits</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="/js/renderCompletions.js" defer></script>
 </head>
 <body>
     <h1>habits</h1>
-    <a href="/login">Login</a>
-    <a href="/login/register">Register</a>
+    <nav>
+        <ul class="nav nav-tabs">
+            <% if (user.firstName) { %>
+                <a class="nav-link" href="/habits/new"><li class="nav-item">Add a new habit</li></a>
+            <% } else { %>
+                <a class="nav-link" href="/login"><li class="nav-item">Login</li></a>
+                <a class="nav-link" href="/login/register"><li class="nav-item">Register</li></a>
+            <% } %>
+        </ul>
+    </nav>
     <% if (user.firstName) { %>
         <p>Hello <%= user.firstName %></p>
-        <a href="/habits/new">Add a new habit</a>
+    <p>Your habits at a glance:</p>
         <% if (habits) {%>
             <p></p>
             <p id="habits" style="display: none;"><%=JSON.stringify(habits)%></p>
         <% }%>
     <% } else { %>
-        <img src="/img/motivation.webp" alt="">
+        <img src="/img/motivation.webp" style="object-fit: contain; height: 100%; width: 100%;" alt="">
         <% } %>
 </body>
 </html>

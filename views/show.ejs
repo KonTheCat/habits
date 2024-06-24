@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>habits</title>
 </head>
 <body>
     <h1><%=habit.name%></h1>
+    <nav>
+        <ul class="nav nav-tabs">
+                <a class="nav-link" href="/habits/"><li class="nav-item">Back to main</li></a>
+                <a class="nav-link" href="/habits/<%= habit._id%>/edit"><li class="nav-item">Edit habit</li></a>
+        </ul>
+    </nav>
     <p>
-        <a href="/habits/<%= habit._id%>/edit">Edit</a>
-        - 
         <form action="/habits/<%= habit._id%>?_method=DELETE" method="POST">
-            <input type="submit" value="DELETE">
+            <input type="submit" value="Delete Habit">
         </form>
     </p>
     <p>Description: <%= habit.description%></p>
