@@ -11,12 +11,14 @@
     <a href="/login">Login</a>
     <a href="/login/register">Register</a>
     <% if (user.firstName) { %>
-        <br>
         <p>Hello <%= user.firstName %></p>
         <a href="/habits/new">Add a new habit</a>
         <% if (habits) {%>
+            <p></p>
             <p id="habits" style="display: none;"><%=JSON.stringify(habits)%></p>
         <% }%>
-    <% } %>
+    <% } else { %>
+        <img src="/img/motivation.webp" alt="">
+        <% } %>
 </body>
 </html>
