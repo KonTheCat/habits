@@ -15,7 +15,7 @@ const getCurrentUserInfo = async function (req, res, next) {
         jwt.verify(cookie, accessToken, async(err, decoded) => {
             if (err) {
                 console.log(`session expired?`)
-                return false
+                next()
             }
             const {id} = decoded
             const user = await Users.findById(id).then(res =>{return res})
