@@ -23,6 +23,7 @@ const getCurrentUserInfo = async function (req, res, next) {
                 }
                 req.userData = userData
                 next()
+                return
             }
             const {id} = decoded
             const user = await Users.findById(id).then(res =>{return res})
