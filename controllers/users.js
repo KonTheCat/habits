@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
             console.log(`successful login`)
             let options = {
                 maxAge: 180 * 60 * 1000,
-                httpOnly: true,
+                httpOnly: false,
                 secure: true,
                 sameSite: "None",
             }
