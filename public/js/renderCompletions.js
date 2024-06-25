@@ -14,6 +14,8 @@ function processHabitsData() {
 
 function createCompletionsTable(numberOfDaysToLookBack, habits) {
     const table = document.createElement("table")
+    table.classList.add("table")
+    table.classList.add("table-bordered")
     const tableBody = document.createElement("tbody")
     const headerRow = document.createElement("tr")
 
@@ -26,9 +28,11 @@ function createCompletionsTable(numberOfDaysToLookBack, habits) {
     datesName.appendChild(datesNameText)
     headerRow.appendChild(datesName)
 
-    for (let i = dateStart.getDate(); i <= dateToday.getDate(); i++) {
+    for (let i = numberOfDaysToLookBack; i >= 0; i--) {
         const cell = document.createElement("td")
-        const cellText = document.createTextNode(`${i}`)
+        const dateNow = new Date()
+        dateNow.setDate(dateToday.getDate() - i)
+        const cellText = document.createTextNode(`${dateNow.toLocaleDateString('en-us', { weekday:"long", month:"short", day:"numeric"})}`)
         cell.appendChild(cellText)
         headerRow.appendChild(cell)
     }
@@ -38,9 +42,9 @@ function createCompletionsTable(numberOfDaysToLookBack, habits) {
         console.log(element)
         const completions = []
         element.completions.forEach(element => {
-            completions.push(Number(element.date.split('T')[0].split('-')[2]))
+            completions.push((new Date(element.date).toLocaleDateString('en-us', { weekday:"long", month:"short", day:"numeric"})))
         })
-
+        console.log(completions)
         const habitRow = document.createElement("tr")
         const habitName = document.createElement("td")
         const habitNameLink = document.createElement('a')
@@ -62,11 +66,16 @@ function createCompletionsTable(numberOfDaysToLookBack, habits) {
         habitName.appendChild(habitEditLink)
         habitRow.appendChild(habitName)
 
-        for (let i = dateStart.getDate(); i <= dateToday.getDate(); i++) {
+        for (let i = numberOfDaysToLookBack; i >= 0; i--) {
             const cell = document.createElement("td")
+            const dateNow = new Date()
+            dateNow.setDate(dateToday.getDate() - i)
             let text = "Not done it"
-            if (completions.includes(i)) {
+            if (completions.includes(dateNow.toLocaleDateString('en-us', { weekday:"long", month:"short", day:"numeric"}))) {
                 text = 'Did it!'
+                cell.classList.add("table-success")
+            } else {
+                cell.classList.add("table-warning")
             }
             const cellText = document.createTextNode(text)
             cell.appendChild(cellText)
