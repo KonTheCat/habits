@@ -23,25 +23,27 @@
     </p>
     <p>Description: <%= habit.description%></p>
     <p>Category: <%= habit.category%></p>
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Notes</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        <% for (let i = 0; i < habit.completions.length; i++) { %>
+    <% if (habit.completions.length > 0 ) { %>
+        <table>
             <tr>
-                <th><%= habit.completions[i].date.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})%></th>
-                <th><%= habit.completions[i].notes%></th>
-                <th><a href="/habits/<%= habit._id%>/<%= habit.completions[i]._id%>/edit">Edit</a></th>
-                <th>
-                    <form action="/habits/<%= habit._id%>/<%= habit.completions[i]._id%>?_method=DELETE" method="POST">
-                        <input type="submit" value="Delete">
-                    </form>
-                </th>
+                <th>Date</th>
+                <th>Notes</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < habit.completions.length; i++) { %>
+                <tr>
+                    <th><%= habit.completions[i].date.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})%></th>
+                    <th><%= habit.completions[i].notes%></th>
+                    <th><a href="/habits/<%= habit._id%>/<%= habit.completions[i]._id%>/edit">Edit</a></th>
+                    <th>
+                        <form action="/habits/<%= habit._id%>/<%= habit.completions[i]._id%>?_method=DELETE" method="POST">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </th>
+                </tr>
+            <% } %>
+        </table>
+    <% } %>
 </body>
 </html>

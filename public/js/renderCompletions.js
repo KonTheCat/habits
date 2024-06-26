@@ -1,6 +1,5 @@
-const numberOfDaysToLookBack = 14
-
 function processHabitsData() {
+    const numberOfDaysToLookBack = Number(document.getElementById("daysToLookBack").value)
     const habits = JSON.parse(document.getElementById('habits').innerHTML)
     console.log(habits.length)
     if (habits.length > 0) {
@@ -13,6 +12,7 @@ function processHabitsData() {
 }
 
 function createCompletionsTable(numberOfDaysToLookBack, habits) {
+    document.getElementById("habittable").innerHTML = ""
     const table = document.createElement("table")
     table.classList.add("table")
     table.classList.add("table-bordered")
@@ -85,7 +85,7 @@ function createCompletionsTable(numberOfDaysToLookBack, habits) {
     });
 
     table.appendChild(tableBody)
-    document.body.appendChild(table)
+    document.getElementById("habittable").appendChild(table)
     table.setAttribute("border", "1")
 }
 

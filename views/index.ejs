@@ -24,6 +24,7 @@
         <p>Hello <%= user.firstName %></p>
         <% if (habits.length > 0) {%>
             <p>Your habits at a glance:</p>
+            <p>Number of days to glance back: <input type="number" id="daysToLookBack" value="14"><input type="button" value="Reload Table" onclick="processHabitsData()"></p>
             <p></p>
             <p id="habits" style="display: none;"><%=JSON.stringify(habits)%></p>
         <% } else { %>
@@ -32,5 +33,6 @@
     <% } else { %>
         <img src="/img/motivation.webp" style="object-fit: contain; height: 100%; width: 100%;" alt="">
         <% } %>
+    <div id="habittable"></div>
 </body>
 </html>
