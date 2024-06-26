@@ -1,13 +1,8 @@
 function processHabitsData() {
     const numberOfDaysToLookBack = Number(document.getElementById("daysToLookBack").value)
     const habits = JSON.parse(document.getElementById('habits').innerHTML)
-    console.log(habits.length)
     if (habits.length > 0) {
-        console.log('we have habits')
-        // console.log(habits)
         createCompletionsTable(numberOfDaysToLookBack, habits)
-    } else {
-        console.log('we have not the habits')
     }
 }
 
@@ -39,12 +34,10 @@ function createCompletionsTable(numberOfDaysToLookBack, habits) {
     tableBody.appendChild(headerRow)
 
     habits.forEach(element => {
-        console.log(element)
         const completions = []
         element.completions.forEach(element => {
             completions.push((new Date(element.date).toLocaleDateString('en-us', { weekday:"long", month:"short", day:"numeric"})))
         })
-        console.log(completions)
         const habitRow = document.createElement("tr")
         const habitName = document.createElement("td")
         const habitNameLink = document.createElement('a')
