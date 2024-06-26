@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Habits = require('../models/habit.js')
 const Users = require('../models/user.js')
+const CookieBlacklist = require('../models/cookieBlacklist.js')
 const jwt = require('jsonwebtoken')
 const accessToken = process.env.SECRET_ACCESS_TOKEN
 
@@ -12,6 +13,20 @@ const getCurrentUserInfo = async function (req, res, next) {
         console.log(`we have a cookie`)
         console.log(header)
         const cookie = header.split('=')[1]
+        const cookieAccessToken = cookie.split(";")[0]
+        const checkIfBlacklisted = await CookieBlacklist.findOne({ token: cookieAccessToken })
+        if (checkIfBlacklisted) {
+            console.log(`access token blacklisted, user logged out`)
+            const userData = {
+                id: null,
+                firstName: null,
+                lastName: null,
+                email: null
+            }
+            req.userData = userData
+            next()
+            return
+        }
         jwt.verify(cookie, accessToken, async(err, decoded) => {
             if (err) {
                 console.log(`session expired`)
