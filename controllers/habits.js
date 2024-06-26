@@ -99,7 +99,7 @@ router.delete('/:habitID/:completionID', async (req, res) => {
     } catch (err) {
         console.error(err)
     }
-    res.redirect('/')
+    res.redirect(`/habits/${req.params.habitID}`)
 })
 
 //UPDATE
